@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            批次课件类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="BatchCourseWare" table="batch_courseware">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+	    <many-to-one name="courseware" column="cw_id" />
+	    <many-to-one name="batch" column="batch_id" />
+		
+	</class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            角色类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Role" table="role">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+		<property name="roleName" type="string">
+			<column name="role_name" length="50" not-null="true" />
+		</property>
+	    <set name="userRoles" cascade="delete">
+        	<key column="role_id"></key>
+        	<one-to-many class="UserRole"></one-to-many>
+        </set>
+        <set name="roleControls" cascade="delete">
+        	<key column="role_id"></key>
+        	<one-to-many class="RoleControl"></one-to-many>
+        </set>
+		
+	</class>
+
+</hibernate-mapping>
+

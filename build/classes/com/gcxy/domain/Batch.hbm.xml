@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            批次类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Batch" table="batch">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+		<property name="batchName" type="string">
+			<column name="batch_name" length="50" not-null="true"/>
+		</property>
+		<property name="starTime" type="date">
+			<column name="star_time" length="11" not-null="true"/>
+		</property>
+		<property name="endTime" type="date">
+			<column name="end_time" length="11" not-null="true"/>
+		</property>
+		<property name="score" type="int">
+			<column name="batch_score"/>
+		</property>
+	   <set name="scores" cascade="save-update,delete" >
+        	<key column="batch_id"></key>
+        	<one-to-many class="Score"></one-to-many>
+        </set>
+	    <set name="leaRecords" cascade="save-update">
+        	<key column="batch_id"></key>
+        	<one-to-many class="LeaRecord"></one-to-many>
+        </set>
+        <set name="batchCoursewares" cascade="delete">
+        	<key column="batch_id"></key>
+        	<one-to-many class="BatchCourseWare"></one-to-many>
+        </set>
+		
+	</class>
+
+</hibernate-mapping>
+

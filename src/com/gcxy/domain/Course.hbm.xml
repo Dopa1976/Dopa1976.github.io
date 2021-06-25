@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            课程类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Course" table="course">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+	    <property name="courseName" type="string">
+			<column name="course_name" length="50" not-null="true"/>
+		</property>
+		<property name="courseNumber" type="string">
+			<column name="coures_number" length="11" not-null="true"/>
+		</property>
+		<set name="coursewares" cascade="save-update">
+        	<key column="course_id"></key>
+        	<one-to-many class="Courseware"></one-to-many>
+        </set>
+	</class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            用户类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="UserInfo" table="userinfo">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+		<property name="userAccount" type="string">
+			<column name="user_account" length="20" not-null="true" />
+		</property>
+		<property name="userPassword" type="string">
+			<column name="user_password" length="20" not-null="true" />
+		</property>
+		<property name="status" type="string">
+			<column name="status" length="20" not-null="true" />
+		</property>
+	    <set name="userRoles" cascade="delete">
+        	<key column="user_id"></key>
+        	<one-to-many class="UserRole"></one-to-many>
+        </set>
+		<set name="leaRecords" cascade="delete">
+        	<key column="user_id"></key>
+        	<one-to-many class="LeaRecord"></one-to-many>
+        </set>
+		<set name="scores" cascade="delete">
+        	<key column="user_id"></key>
+        	<one-to-many class="Score"></one-to-many>
+        </set>
+	</class>
+
+</hibernate-mapping>
+

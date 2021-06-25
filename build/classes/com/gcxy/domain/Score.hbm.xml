@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            成绩类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Score" table="score">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+		<property name="score" type="int">
+			<column name="score"  />
+		</property>
+	    <many-to-one name="userinfo" column="user_id" />
+	    <many-to-one name="batch" column="batch_id" />
+		
+	</class>
+
+</hibernate-mapping>
+

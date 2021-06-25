@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            课件类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Courseware" table="courseware">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+	    <property name="cwName" type="string">
+			<column name="cw_name" length="50" not-null="true"/>
+		</property>
+		<property name="cwCredit" type="int">
+			<column name="cw_credit"/>
+		</property>
+		<property name="cwAddress" type="string">
+			<column name="cw_adress" length="50" not-null="true"/>
+		</property>
+		<property name="cwType" type="string">
+			<column name="cw_type" length="1" not-null="true"/>
+		</property>
+		<set name="leaRecords" cascade="save-update">
+        	<key column="cw_id"></key>
+        	<one-to-many class="LeaRecord"></one-to-many>
+        </set>
+	    <set name="batchCoursewares" cascade="delete">
+        	<key column="cw_id"></key>
+        	<one-to-many class="BatchCourseWare"></one-to-many>
+        </set>
+        <many-to-one name="course" column="course_id" />
+	</class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- constant配置常量信息 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<constant name="struts.multipart.maxSize" value="70000000" />
+	<constant name="struts.action.excludePattern"
+		value="/static/.*?" /><!-- default locale -->
+
+	<package name="default" extends="json-default,struts-default">
+
+		<!-- 登录、注册 -->
+		<action name="register" class="RegisterAction"
+			method="register">
+			<result name="success">index.jsp</result>
+			<result name="fail">fail.jsp</result>
+			<result name="index">index.jsp</result>
+		</action>
+		<action name="login" class="RegisterAction" method="login">
+			<result name="success">home-v1.jsp</result>
+			<result name="fail">fail.jsp</result>
+		</action>
+
+		<!-- 课程管理 -->
+		<action name="CoursequeryName" class="CourseAction"
+			method="CoursequeryName">
+			<result name="success">home-course.jsp</result>
+		</action>
+		<action name="courseQuery" class="CourseAction"
+			method="courseQuery">
+			<result name="success">home-course.jsp</result>
+			<result name="index">index.jsp</result>
+		</action>
+		<action name="Courseadd" class="CourseAction"
+			method="Courseadd">
+			<result name="success" type="chain">courseQuery</result>
+		</action>
+		<action name="Coursedelete" class="CourseAction"
+			method="Coursedelete">
+			<result name="success" type="chain">courseQuery</result>
+		</action>
+		<action name="courseModifyAction" class="CourseAction"
+			method="courseModify">
+			<result name="success">courseUpdate.jsp</result>
+		</action>
+		<action name="courseUpdateAction" class="CourseAction"
+			method="courseUpdate">
+			<result name="success" type="chain">courseQuery</result>
+		</action>
+
+		<!-- 注销 -->
+		<action name="cancel" method="cancel" class="RegisterAction">
+			<result name="cancel">index.jsp</result>
+		</action>
+
+
+		<!-- 成绩的 批量上传 -->
+		<action name="ScoreUpload" class="MyUploadAction"
+			method="ScoreUpload">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">
+					application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success" type="chain">scoreQueryAll</result>
+		</action>
+		<!-- 成绩管理 -->
+		<action name="scoreQueryAll" class="MyUploadAction"
+			method="scoreQuery">
+			<result name="success">scoreManage.jsp</result>
+		</action>
+		<action name="userScoreQuery" class="MyUploadAction"
+			method="userScoreQuery">
+			<result name="success">scoreManage.jsp</result>
+		</action>
+		<action name="scoreDelete" class="MyUploadAction"
+			method="scoreDelete">
+			<result name="success" type="chain">scoreQueryAll</result>
+		</action>
+		<action name="scoreAddQueryAction" class="MyUploadAction"
+			method="scoreAddQuery">
+			<result name="success">scoreAdd.jsp</result>
+		</action>
+		<action name="scoreAddAction" class="MyUploadAction"
+			method="scoreAdd">
+			<result name="success" type="chain">scoreQueryAll</result>
+		</action>
+		<action name="scoreModifyQueryAction" class="MyUploadAction"
+			method="scoreModifyQuery">
+			<result name="success">scoreModify.jsp</result>
+		</action>
+		<action name="scoreModifyAction" class="MyUploadAction"
+			method="scoreModify">
+			<result name="success" type="chain">scoreQueryAll</result>
+		</action>
+
+		<!-- 角色权限管理 -->
+		<action name="queryUserManager" method="queryUserManager"
+			class="UserManagerAction">
+			<result name="success">UserRightsManagement.jsp</result>
+			<result name="cancel">index.jsp</result>
+		</action>
+		<action name="queryManagerByname" class="UserManagerAction"
+			method="serch">
+			<result name="success">UserRightsManagement.jsp</result>
+		</action>
+		<action name="deleteUserManagerMenu" class="UserManagerAction"
+			method="deleteById">
+			<result name="success" type="chain">queryUserManager</result>
+		</action>
+		<action name="serchMenu" class="UserManagerAction"
+			method="serchMenu">
+			<result name="success">menuQuery.jsp</result>
+		</action>
+		<action name="quertAllRole" class="UserManagerAction"
+			method="quertAllRole">
+			<result name="success">queryRole.jsp</result>
+		</action>
+		<action name="addUserManager" class="UserManagerAction"
+			method="addUserManager">
+			<result name="success" type="chain">queryUserManager</result>
+		</action>
+		<!-- 批次管理 -->
+		<action name="BaqueryAll" class="BatchAction"
+			method="BaqueryAll">
+			<result name="success">Batch.jsp</result>
+		</action>
+		<action name="Badelete" class="BatchAction" method="Badelete">
+			<result name="success" type="chain">BaqueryAll</result>
+		</action>
+		<action name="Baadd" class="BatchAction" method="Baadd">
+			<result name="success" type="chain">BaqueryAll</result>
+		</action>
+		<action name="BaqueryName" class="BatchAction"
+			method="BaqueryName">
+			<result name="success">Batch.jsp</result>
+		</action>
+		<!-- 批次人员 -->
+		<action name="batPeoAction" class="BatchAction"
+			method="queryBp">
+			<result name="success">batchPeople.jsp</result>
+		</action>
+		<action name="deletePeo" class="BatchAction" method="deletePeo">
+			<result name="success" type="chain">batPeoAction</result>
+		</action>
+		<action name="queryAddPeoAction" class="BatchAction"
+			method="queryAddPeo">
+			<result name="success">batchPeoAdd.jsp</result>
+		</action>
+		<action name="batPeoAddAction" class="BatchAction"
+			method="batPeoAdd">
+			<result name="success" type="chain">queryAddPeoAction</result>
+		</action>
+		<action name="queryBPNameAction" class="BatchAction"
+			method="queryBPName">
+			<result name="success">batchPeople.jsp</result>
+		</action>
+
+		<!-- 批次课件 -->
+		<action name="batCwAction" class="BatchAction" method="queryBc">
+			<result name="success">batchCW.jsp</result>
+		</action>
+		<action name="deleteCou" class="BatchAction" method="deleteCou">
+			<result name="success" type="chain">batCwAction</result>
+		</action>
+		<action name="queryBCName" class="BatchAction"
+			method="queryBCName">
+			<result name="success">batchCW.jsp</result>
+		</action>
+		<action name="queryAddCouAction" class="BatchAction"
+			method="queryAddCou">
+			<result name="success">batchCouAdd.jsp</result>
+		</action>
+		<action name="batCouAddAction" class="BatchAction"
+			method="batCouAdd">
+			<result name="success" type="chain">queryAddCouAction</result>
+		</action>
+
+
+		<!--角色管理 -->
+		<action name="queryrole" class="RoleAction" method="queryrole">
+			<result name="success">role.jsp</result>
+		</action>
+		<action name="addRole" class="RoleAction" method="addRole">
+			<result name="success" type="chain">queryrole</result>
+		</action>
+		<action name="deleteRole" class="RoleAction"
+			method="deleteRole">
+			<result name="success" type="chain">queryrole</result>
+		</action>
+		<action name="updateRole" class="RoleAction"
+			method="updateRole">
+			<result name="success" type="chain">queryrole</result>
+		</action>
+		<action name="queryByname" class="RoleAction"
+			method="queryByname">
+			<result name="success">role.jsp</result>
+		</action>
+		<action name="roleModifyAction" class="RoleAction"
+			method="roleModify">
+			<result name="success">roleUpdate.jsp</result>
+		</action>
+		<action name="roleUpdateAction" class="RoleAction"
+			method="updateRole">
+			<result name="success" type="chain">queryrole</result>
+		</action>
+
+		<!--用户角色管理 -->
+		<action name="queryUserRoleAll" class="UserRoleAction"
+			method="queryUserRoleAll">
+			<result name="success">UserRole.jsp</result>
+		</action>
+		<action name="queryByName" class="UserRoleAction"
+			method="queryByName">
+			<result name="success">UserRole.jsp</result>
+		</action>
+		<action name="rdeleteById" class="UserRoleAction"
+			method="deleteById">
+			<result name="success" type="chain">queryUserRoleAll</result>
+		</action>
+		<action name="addUserRole" class="UserRoleAction"
+			method="addUserRole">
+			<result name="success" type="chain">queryUserRoleAll</result>
+		</action>
+		<action name="addqueryUserRole" class="UserRoleAction"
+			method="addqueryUserRole">
+			<result name="success">AddRoleUser.jsp</result>
+		</action>
+
+		<!--课件管理 -->
+		<action name="uploadAction" class="CoursewareAction"
+			method="cwUpload">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">video/x-msvideo,video/mp4</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success" type="chain">CwqueryAll</result>
+			<result name="input" type="chain">queryCourseAction</result>
+		</action>
+		<action name="CwqueryAll" class="CoursewareAction"
+			method="CwqueryAll">
+			<result name="find">Courseware.jsp</result>
+		</action>
+		<action name="Cwdelete" class="CoursewareAction"
+			method="Cwdelete">
+			<result name="delete" type="chain">CwqueryAll</result>
+		</action>
+
+		<action name="CwqueryName" class="CoursewareAction"
+			method="CwqueryName">
+			<result name="queryName">Courseware.jsp</result>
+		</action>
+		<action name="queryCourseAction" class="CoursewareAction"
+			method="queryCourse">
+			<result name="success">CwUpload.jsp</result>
+		</action>
+
+		<!--学习记录管理 -->
+		<action name="LeaqueryAll" class="LeaRecordAction"
+			method="LeaqueryAll">
+			<result name="success">LeaRecord.jsp</result>
+		</action>
+		<action name="Leadelete" class="LeaRecordAction"
+			method="Leadelete">
+			<result name="success" type="chain">LeaqueryAll</result>
+		</action>
+		<action name="userqueryName" class="LeaRecordAction"
+			method="userqueryName">
+			<result name="success">LeaRecord.jsp</result>
+		</action>
+
+
+		<!--用户管理 -->
+		<action name="userInfoAction" class="userInfoAction"
+			method="queryAllUserInfo">
+			<result name="success">UserInfo.jsp</result>
+		</action>
+		<action name="queryBuCondition" class="userInfoAction"
+			method="queryBuCondition">
+			<result name="success">UserInfo.jsp</result>
+		</action>
+		<action name="deleteUserInfo" class="userInfoAction"
+			method="delete">
+			<result name="success" type="chain">userInfoAction</result>
+		</action>
+		<action name="auditing" class="userInfoAction"
+			method="auditing">
+			<result name="success" type="chain">userInfoAction</result>
+		</action>
+		<!--课件学习 -->
+		<action name="queryBatchByUserId" class="BatchUserAction"
+			method="queryBatchByUserId">
+			<result name="success">BatchUser.jsp</result>
+		</action>
+		<action name="queryBatchCourseWare" class="BatchUserAction"
+			method="queryBatchCourseWare">
+			<result name="success">BatchUserLookVideo.jsp</result>
+		</action>
+		<action name="lookVideo" class="BatchUserAction"
+			method="lookVideo">
+			<result name="success">look.jsp</result>
+		</action>
+		<action name="innerLook" class="BatchUserAction"
+			method="innerLook">
+			<result name="success">look.jsp</result>
+		</action>
+		<!--分数查询 -->
+		<action name="queryScorce" class="QueryScorceAction"
+			method="queryScorce">
+			<result name="success">QueryScorce.jsp</result>
+		</action>
+		<!--修改密码 -->
+		<action name="querypasswordById" class="UpdatePasswordAction"
+			method="querypasswordById">
+			<result name="success"> UpdatePassword.jsp</result>
+		</action>
+		<action name="updatePassword" class="UpdatePasswordAction"
+			method="updatePassword">
+			<result name="success"> index.jsp</result>
+		</action>
+
+		<!-- 菜单管理 -->
+		<action name="menuQueryAction" class="MenuAction"
+			method="menuQueryAll">
+			<result name="success">menu.jsp</result>
+		</action>
+		<action name="menuDeleteAction" class="MenuAction"
+			method="menuDelete">
+			<result name="success" type="chain">menuQueryAction</result>
+		</action>
+		<action name="menuQueryNameAction" class="MenuAction"
+			method="menuQueryName">
+			<result name="success">menu.jsp</result>
+		</action>
+		<action name="menuQuMoAction" class="MenuAction"
+			method="menuQuMo">
+			<result name="success">menuModify.jsp</result>
+		</action>
+		<action name="menuUpdateAction" class="MenuAction"
+			method="menuUpdate">
+			<result name="success" type="chain">menuQueryAction</result>
+		</action>
+		<action name="menuAddQueryAction" class="MenuAction"
+			method="menuAddQuery">
+			<result name="success">menuAdd.jsp</result>
+		</action>
+		<action name="menuAddAction" class="MenuAction"
+			method="menuAdd">
+			<result name="success" type="chain">menuQueryAction</result>
+		</action>
+	</package>
+</struts>
+

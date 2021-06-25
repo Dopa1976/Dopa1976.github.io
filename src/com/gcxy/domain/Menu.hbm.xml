@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 菜单类映射文件 -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="Menu" table="menu">
+
+		<id name="id" column="id" length="11">
+			<generator class="identity" />
+		</id>
+		<property name="sortNo" type="int">
+			<column name="sort_no" length="11" not-null="true" />
+		</property>
+		<property name="menuName" type="string">
+			<column name="menu_name" length="50" not-null="true" />
+		</property>
+		<property name="address" type="string">
+			<column name="address" length="50" not-null="true" />
+		</property>
+		<bag name="roleControls" cascade="delete">
+			<key column="menu_id"></key>
+			<one-to-many class="RoleControl"></one-to-many>
+		</bag>
+		<!-- 自身多对一，表示与上级部门的一对多关系 -->
+		<many-to-one name="menu" class="Menu" lazy="false" >
+			<column name="parent_id" />
+		</many-to-one>
+		<!-- 自身一对多,表示与下级部门的一对多关系 由于是自身关联无法设置使多的少的一方维护关系,所以只能使用集合维护关系,但是在设置保存的时候如果再对象层面上设置 
+			双边关系,自动生成多条update语句,执行效率差,所以当我们使用自身关联时,在对象上设置单边关系,这样可以减少sql语句的执行 提高效率 -->
+		<bag name="children" inverse="false" lazy="true" cascade="delete">
+			<key>
+				<column name="parent_id" />
+			</key>
+			<one-to-many class="Menu" />
+		</bag>
+
+
+
+	</class>
+
+</hibernate-mapping>
+

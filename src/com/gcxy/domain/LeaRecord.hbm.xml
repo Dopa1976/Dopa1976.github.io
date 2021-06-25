@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<!-- 
+
+            学习记录类映射文件
+            
+ -->
+<hibernate-mapping package="com.gcxy.domain">
+
+	<class name="LeaRecord" table="lea_record">
+	
+		<id name="id" column="id" length="11">
+			<generator class="identity"  />
+		</id>
+		<property name="playTime" type="string">
+			<column name="play_time"/>
+		</property>
+		<property name="times" type="date">
+			<column name="times" not-null="true"/>
+		</property>
+		<property name="totalLength" type="string">
+			<column name="total_length"/>
+		</property>
+		<property name="finish" type="string">
+			<column name="finish" length="1" not-null="true"/>
+		</property>
+	    <many-to-one name="user" column="user_id" />
+	    <many-to-one name="batch" column="batch_id" lazy="false" />
+		<many-to-one name="courseware" column="cw_id" />
+	</class>
+
+</hibernate-mapping>
+
